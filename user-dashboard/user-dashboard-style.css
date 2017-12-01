@@ -1,0 +1,63 @@
+#userDashboardWindow {
+  background: url("./../assets/background-2.png") no-repeat;
+  background-size: 800px 520px;
+}
+
+#fixed {
+  background: #ECEFF1;
+}
+
+#vbox {
+  
+}
+
+#hbox {
+  
+}
+
+#dashboardLbl {
+  font-weight: normal;
+  font-size: 20px;
+  color: white;
+}
+
+#userIconBtn {
+  background: #20A8D8;
+  background-size: 30px 30px;
+  border: 0px;
+}
+
+#username {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+#password {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+#loginBtn {
+  background: green;
+  border-color: green;
+  border: 0px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 12px;
+}
+
+#signupLbl {
+  padding-left: 40px;
+}
+
+#signupLink {
+  color: #20A8D8;
+}
+
+#errorLbl {
+  color: red;
+  font-weight: lighter;
+}

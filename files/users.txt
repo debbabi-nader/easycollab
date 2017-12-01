@@ -1,0 +1,12 @@
+1 Swanson Barker barsw 123456 barkerswanson@conjurica.com PM 0
+2 Scott Myrna myscot 123456 myrnascott@conjurica.com EM 0
+3 Mueller Crawford mucraw 123456 muellercrawford@conjurica.com EM 0
+4 Henry Price henpr 123456 pricehenry@conjurica.com EM 0
+5 Lamb Holland lamhol 123456 lambholland@conjurica.com EM 0
+6 Leta Sloan letslo 123456 letasloan@conjurica.com PM 0
+7 Haley Short halsh 123456 haleyshort@conjurica.com EM 0
+8 Compton Hammond comham 123456 comptonhammond@conjurica.com PM 0
+9 Medina Frye medfry 123456 medinafrye@conjurica.com EM 0
+10 Gonzales Roman gonrom 123456 gonzalesroman@conjurica.com EM 0
+11 Corinne Vazquez corvaz 123456 corinnevazquez@conjurica.com EM 0
+12 Amber Compton ambcom 123456 ambercompton@conjurica.com EM 0

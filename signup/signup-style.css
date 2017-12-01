@@ -1,0 +1,44 @@
+#signupWindow {
+  background: url("./../assets/background-1.png") no-repeat;
+  background-size: 800px 520px;
+}
+
+#fixed {
+  background: white;
+}
+
+#vbox {
+  /*background: red;*/
+}
+
+#hbox {
+  
+}
+
+#signupLbl {
+  font-weight: normal;
+  font-size: 26px;
+  padding-bottom: 26px;
+  padding-left: 0px;
+}
+
+#name, #firstName, #email, #username, #password {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+#signupBtn {
+  background: green;
+  border-color: green;
+  border: 0px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 12px;
+}
+
+#errorLbl {
+  color: red;
+  font-weight: lighter;
+}
