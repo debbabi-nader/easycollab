@@ -9,7 +9,7 @@ GtkWidget *loginLbl;
 GtkWidget *username;
 GtkWidget *password;
 GtkWidget *loginBtn;
-GtkWidget *signupLbl;
+GtkWidget *signupBottomLbl;
 GtkWidget *signupLink;
 GtkWidget *errorLbl;
 
@@ -61,7 +61,7 @@ static void login (GtkWidget *widget, gpointer data)
 
   }
   else {
-    printf("error\n");
+    printf("Error while opening the file.\n");
   }
 
   fclose(usersf);
@@ -110,8 +110,8 @@ static void showLoginWindow (GtkWidget *widget, gpointer data)
   gtk_widget_set_name(loginBtn, "loginBtn");
   g_signal_connect (loginBtn, "clicked", G_CALLBACK (login), NULL);
 
-  signupLbl = gtk_label_new("New to EasyCollab?");
-  gtk_widget_set_name(signupLbl, "signupLbl");
+  signupBottomLbl = gtk_label_new("New to EasyCollab?");
+  gtk_widget_set_name(signupBottomLbl, "signupBottomLbl");
 
   signupLink = gtk_label_new("Sign up now");
   gtk_widget_set_name(signupLink, "signupLink");
@@ -121,7 +121,7 @@ static void showLoginWindow (GtkWidget *widget, gpointer data)
   gtk_widget_set_events (eventBox, GDK_BUTTON_PRESS_MASK);
   g_signal_connect (eventBox, "button_press_event", G_CALLBACK (showSignupWindow), NULL);
   
-  gtk_box_pack_start(GTK_BOX(hbox), signupLbl, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox), signupBottomLbl, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(hbox), eventBox, FALSE, FALSE, 5);
 
   gtk_box_pack_start(GTK_BOX(vbox), loginLbl, TRUE, TRUE, 0);

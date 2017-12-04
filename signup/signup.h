@@ -5,6 +5,7 @@ GtkWidget *vbox;
 GtkWidget *hbox;
 
 GtkWidget *signupLbl;
+GtkWidget *errorLbl;
 GtkWidget *firstName;
 GtkWidget *name;
 GtkWidget *email;
@@ -19,17 +20,79 @@ GtkCssProvider *provider;
 GdkDisplay *display;
 GdkScreen *screen;
 
-char role[5];
+char role[5] = "PM";
+int space = ' ';
+
+FILE *usersf;
+User user;
+int exist = 0;
+int latestID = 0;
+
+
+static void showLoginWindow (GtkWidget *widget, gpointer data);
 
 
 static void roleChange(GtkWidget *widget, gpointer data) {
     strcpy(role, data);
-    printf("%s\n" , role);
 }
 
 
 static void signup (GtkWidget *widget, gpointer data)
 {
+
+  if(strlen(gtk_entry_get_text (GTK_ENTRY (firstName))) == 0 || strlen(gtk_entry_get_text (GTK_ENTRY (name))) == 0 || strlen(gtk_entry_get_text (GTK_ENTRY (username))) == 0 || strlen(gtk_entry_get_text (GTK_ENTRY (password))) == 0 || strlen(gtk_entry_get_text (GTK_ENTRY (email))) == 0)
+  {
+    gtk_label_set_text(GTK_LABEL (errorLbl), "* Please, fill up all the fields!");
+  }
+  else if(strchr(gtk_entry_get_text (GTK_ENTRY (firstName)), space) != NULL || strchr(gtk_entry_get_text (GTK_ENTRY (name)), space) != NULL || strchr(gtk_entry_get_text (GTK_ENTRY (username)), space) != NULL || strchr(gtk_entry_get_text (GTK_ENTRY (password)), space) != NULL || strchr(gtk_entry_get_text (GTK_ENTRY (email)), space) != NULL)
+  {
+    gtk_label_set_text(GTK_LABEL (errorLbl), "* Spaces are not allowed!");
+  }
+  else {
+
+    gtk_label_set_text(GTK_LABEL (errorLbl), "");
+    exist = 0;
+
+    usersf = fopen("./files/users.txt", "a+");
+
+    if(usersf != NULL) {
+
+      while(fscanf(usersf, "%d %s %s %s %s %s %s %d", &user.id, user.name, user.firstName, user.username, user.password, user.email, user.role, &user.connected) == 8) {
+
+        if(strcmp(user.username, gtk_entry_get_text (GTK_ENTRY (username))) == 0) {
+          exist = 1;
+        }
+
+        if(user.id > latestID) {
+          latestID = user.id;
+        }
+
+      }
+
+      if(exist == 1) {
+
+        gtk_label_set_text(GTK_LABEL (errorLbl), "* User with a simillar username exists!");
+
+      }
+      else {
+
+        gtk_label_set_text(GTK_LABEL (errorLbl), "");
+        latestID = latestID + 1;
+        fprintf(usersf, "%d %s %s %s %s %s %s %d\n", latestID, gtk_entry_get_text (GTK_ENTRY (firstName)), gtk_entry_get_text (GTK_ENTRY (name)), gtk_entry_get_text (GTK_ENTRY (username)), gtk_entry_get_text (GTK_ENTRY (password)), gtk_entry_get_text (GTK_ENTRY (email)),  role, 0);
+
+        //fclose(usersf);
+        showLoginWindow(widget, NULL);
+
+      }
+
+    }
+    else {
+      printf("Error while opening the file.\n");
+    }
+
+    fclose(usersf);
+
+  }
 
 }
 
@@ -47,7 +110,7 @@ static void showSignupWindow (GtkWidget *widget, gpointer data)
   
   vbox = gtk_box_new(TRUE, 2);
   gtk_orientable_set_orientation(GTK_ORIENTABLE(vbox), GTK_ORIENTATION_VERTICAL);
-  gtk_widget_set_size_request (vbox, 300, 400);
+  gtk_widget_set_size_request (vbox, 300, 424);
   gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
   gtk_widget_set_name(vbox, "vbox");
 
@@ -58,6 +121,9 @@ static void showSignupWindow (GtkWidget *widget, gpointer data)
 
   signupLbl = gtk_label_new("Sign up");
   gtk_widget_set_name(signupLbl, "signupLbl");
+
+  errorLbl = gtk_label_new("");
+  gtk_widget_set_name(errorLbl, "errorLbl");
 
   firstName = gtk_entry_new();
   gtk_entry_set_placeholder_text(GTK_ENTRY(firstName) , "First Name");
@@ -96,12 +162,13 @@ static void showSignupWindow (GtkWidget *widget, gpointer data)
   g_signal_connect (signupBtn, "clicked", G_CALLBACK (signup), NULL);
 
   gtk_box_pack_start(GTK_BOX(vbox), signupLbl, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), errorLbl, TRUE, TRUE, 10);
   gtk_box_pack_start(GTK_BOX(vbox), firstName, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), name, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), email, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), username,TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(vbox), password, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 2);
+  gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 4);
   gtk_box_pack_start(GTK_BOX(vbox), signupBtn, TRUE, TRUE, 16);
 
   fixed = gtk_fixed_new ();
