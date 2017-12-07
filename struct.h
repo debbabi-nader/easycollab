@@ -15,6 +15,8 @@ typedef struct Message Message;
 
 typedef struct Date Date;
 
+typedef struct ProjectDashboardParam ProjectDashboardParam;
+
 
 struct Date
 {
@@ -110,4 +112,10 @@ struct DocumentList
 {
 	Document document;
 	DocumentList *next;
+};
+
+struct ProjectDashboardParam
+{
+	int connectedUserID;
+	char selectedProjectName[100];
 };

@@ -8,7 +8,7 @@
 }
 
 #vbox {
-  
+
 }
 
 #hbox {
@@ -21,25 +21,14 @@
   color: white;
 }
 
-#userIconBtn {
-  background: #20A8D8;
-  background-size: 30px 30px;
-  border: 0px;
+#projectLbl {
+  font-weight: bold;
+  font-size: 16px;
+  color: #263238;
+  padding-right: 450px;
 }
 
-#username {
-  padding: 10px;
-  font-size: 12px;
-  font-weight: lighter;
-}
-
-#password {
-  padding: 10px;
-  font-size: 12px;
-  font-weight: lighter;
-}
-
-#loginBtn {
+#createProjectBtn {
   background: green;
   border-color: green;
   border: 0px;
@@ -49,15 +38,11 @@
   padding: 12px;
 }
 
-#signupLbl {
-  padding-left: 40px;
-}
-
-#signupLink {
-  color: #20A8D8;
-}
-
-#errorLbl {
-  color: red;
-  font-weight: lighter;
+#projectBtn {
+  background: white;
+  border: 1px solid #B0BEC5;
+  color: #263238;
+  font-weight: normal;
+  font-size: 14px;
+  padding: 12px;
 }

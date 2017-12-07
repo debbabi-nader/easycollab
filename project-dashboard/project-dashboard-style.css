@@ -1,0 +1,22 @@
+#projectDashboardWindow {
+  background: url("./../assets/background-2.png") no-repeat;
+  background-size: 1000px 520px;
+}
+
+#fixed {
+  background: #ECEFF1;
+}
+
+#vbox {
+
+}
+
+#hbox {
+  
+}
+
+#dashboardLbl {
+  font-weight: normal;
+  font-size: 20px;
+  color: white;
+}

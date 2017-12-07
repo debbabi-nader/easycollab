@@ -20,6 +20,7 @@ GdkScreen *screen;
 FILE *usersf;
 User user;
 int exist;
+//int *id;
 
 
 static void login (GtkWidget *widget, gpointer data)
@@ -44,7 +45,8 @@ static void login (GtkWidget *widget, gpointer data)
         }
         else {
 	  gtk_label_set_text(GTK_LABEL (errorLbl), "");
-	  showUserDashboardWindow(widget, NULL);
+          //id = &(user.id);
+	  showUserDashboardWindow(widget, &(user.id));
         }
 
 	exist = 1;
@@ -119,6 +121,7 @@ static void showLoginWindow (GtkWidget *widget, gpointer data)
   eventBox = gtk_event_box_new();
   gtk_container_add (GTK_CONTAINER (eventBox), signupLink);
   gtk_widget_set_events (eventBox, GDK_BUTTON_PRESS_MASK);
+  gtk_widget_set_name(eventBox, "eventBox");
   g_signal_connect (eventBox, "button_press_event", G_CALLBACK (showSignupWindow), NULL);
   
   gtk_box_pack_start(GTK_BOX(hbox), signupBottomLbl, FALSE, FALSE, 0);
@@ -141,10 +144,10 @@ static void showLoginWindow (GtkWidget *widget, gpointer data)
   display = gdk_display_get_default ();
   screen = gdk_display_get_default_screen (display);
   gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
- 
+
   GError *error = 0;
   gtk_css_provider_load_from_file(provider, g_file_new_for_path("./login/login-style.css"), &error);
-  
+
   gtk_widget_show_all (loginWindow);
 
   if(widget != NULL)
