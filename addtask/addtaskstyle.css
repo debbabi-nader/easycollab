@@ -1,4 +1,4 @@
-#addProjectWindow {
+#addTaskWindow {
   background: url("./../assets/background-2.png") no-repeat;
   background-size: 800px 520px;
 }
@@ -16,7 +16,7 @@
   background: green;
 }
 
-#addprojectLbl {
+#addtaskLbl {
   font-weight: normal;
   font-size: 20px;
   color: white;
@@ -28,7 +28,7 @@
   border: 0px;
 }
 
-#nameput,#descriptionput,#membre,#dueput1 {
+#nameput,#descriptionput,#assignput,#dueput1 {
   padding: 10px;
   font-size: 12px;
   font-weight: lighter;
@@ -40,7 +40,7 @@
   font-weight: lighter;
 }
 
-#createproj {
+#addtask  {
   background: green;
   border-color: green;
   border: 0px;
@@ -50,7 +50,7 @@
   padding: 12px;
 }
 
-#namelbl,#descriptionlbl,#duelbl,#memberlbl,#endlbl {
+#namelbl,#descriptionlbl,#duelbl,#memberlbl,#assign {
   font-weight: normal;
   font-size: 14px;
 }
