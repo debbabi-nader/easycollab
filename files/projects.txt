@@ -1,0 +1,39 @@
+projectID:1
+projectName:Web Crawler
+projectDescription:Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+projectStartDate:02/11/2017
+projectFinishDate:02/01/2018
+projectLength:60
+projectState:IN PROGRESS
+projectDiscussion:1,2,3
+projectAdmin:1
+projectGroupMembers:2,3,4,
+projectTaskList:1,2,3,4
+projectDocumentList:1
+$
+projectID:2
+projectName:Crypto Stock
+projectDescription:Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+projectStartDate:02/11/2017
+projectFinishDate:02/01/2018
+projectLength:60
+projectState:IN PROGRESS
+projectDiscussion:1,2,3
+projectAdmin:1
+projectGroupMembers:6,7,83,
+projectTaskList:1,2,3,4
+projectDocumentList:1
+$
+projectID:3
+projectName:Job Matching
+projectDescription:Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+projectStartDate:02/11/2017
+projectFinishDate:02/01/2018
+projectLength:60
+projectState:IN PROGRESS
+projectDiscussion:1,2,3
+projectAdmin:1
+projectGroupMembers:9,5,
+projectTaskList:1,2,3,4
+projectDocumentList:1
+$
