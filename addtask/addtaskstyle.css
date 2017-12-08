@@ -1,0 +1,73 @@
+#addTaskWindow {
+  background: url("./../assets/background-2.png") no-repeat;
+  background-size: 800px 520px;
+}
+
+#fixed {
+  background: #ECEFF1;
+}
+
+#vbox {
+   padding-right:260px;
+  
+}
+
+#hbox {
+  background: green;
+}
+
+#addtaskLbl {
+  font-weight: normal;
+  font-size: 20px;
+  color: white;
+}
+
+#userIconBtn {
+  background: #20A8D8;
+  background-size: 30px 30px;
+  border: 0px;
+}
+
+#nameput,#descriptionput,#assignput,#dueput1 {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+#dueput2,#dueput3,#endput1,#endput2,#endput3 {
+  padding: 3px;
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+#addtask  {
+  background: green;
+  border-color: green;
+  border: 0px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 12px;
+}
+
+#namelbl,#descriptionlbl,#duelbl,#memberlbl,#assign {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+#add {
+  background: #20A8D8;
+  border-color: #20A8D8;
+  border: 0px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 12px;
+  
+}
+
+#errorLbl,#errornameLbl,#errordueLbl,#errorendLbl {
+  color: red;
+  font-weight: lighter;
+}
+

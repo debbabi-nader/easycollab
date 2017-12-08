@@ -26,10 +26,18 @@ GdkDisplay *display;
 GdkScreen *screen;
 int n=0;
 char tab[50][50];
-FILE *usersf;
+FILE *usersf,*projectsf;
 User user;
 char err[50];
+char errname[50];
+char errdue[50];
+char errend[50];
+char esm[50];
+char descrip[500];
+char due[10];
+char end[10];
 
+void showAddProjectWindow (GtkWidget *widget, gpointer data);
 
 static void addMember (GtkWidget *widget, gpointer data)
 {
@@ -60,6 +68,11 @@ static void addMember (GtkWidget *widget, gpointer data)
 	     gtk_entry_set_text (GTK_ENTRY (membre), "");
 	 }
 	 
+	 strcpy(esm,gtk_entry_get_text (GTK_ENTRY (nameput)));
+	 strcpy(descrip,gtk_entry_get_text (GTK_ENTRY (descriptionput)));
+	 strcpy(due,gtk_entry_get_text (GTK_ENTRY (dueput1)));
+	 strcpy(end,gtk_entry_get_text (GTK_ENTRY (endput1)));
+	 
 	 showAddProjectWindow(NULL,NULL);
      gtk_widget_destroy (gtk_widget_get_toplevel (widget));
 	
@@ -73,9 +86,167 @@ else
 
 }
 
+int verifdate(const char *dat)
+{
+	int i;
+	for(i=0;i<=1;i++)
+	{
+		if ((dat[i]<48) || (dat[i]>57))
+		{
+			return 0;
+		}
+	}
+	for(i=3;i<=4;i++)
+	{
+		if ((dat[i]<48) || (dat[i]>57))
+		{
+			return 0;
+		}
+	}
+	for(i=6;i<=9;i++)
+	{
+		if ((dat[i]<48) || (dat[i]>57))
+		{
+			return 0;
+		}
+	}
+	if((dat[2]!=47)||(dat[5]!=47))
+	{
+		return 0;
+	}
+	char ji[2];
+	ji[0]=dat[0];
+	ji[1]=dat[1];
+	char mi[2];
+	mi[0]=dat[3];
+	mi[1]=dat[4];
+	char ai[4];
+	ai[0]=dat[6];
+	ai[1]=dat[7];
+	ai[2]=dat[8];
+	ai[3]=dat[9];
+	int j=atoi(ji);
+	int m=atoi(mi);
+	int a=atoi(ai);
+	if((j==0)||(m==0)||(a==0)||(j>31)||(m>12)||(a<2017))
+	{
+		return 0;
+	}
+	return 1;
+	
+}
+
+
+
 static void createProject (GtkWidget *widget, gpointer data)
 {
+	int erreur=0;
+	projectsf = fopen("./files/projects.txt", "a+");
+	Project project;
+	char projectStartDate[20];
+	char projectFinishDate[20];
+	char projectDiscussion[300];
+	char projectGroupMembers[50];
+	char projectTaskList[50];
+	char projectDocumentList[50];
+	int adminID;
+	int dernier;
+	int i;
 	
+	
+	if(projectsf!= NULL)	
+	{
+		int test=0;
+		while((fscanf(projectsf,
+		 "projectID:%d\n"
+		 "projectName:%[^\n]\n"
+		 "projectDescription:%[^\n]\n"
+		 "projectStartDate:%[^\n]\n"
+ 		 "projectFinishDate:%[^\n]\n"
+		 "projectLength:%d\n"
+		 "projectState:%[^\n]\n"
+		 "projectDiscussion:%[^\n]\n"
+		 "projectAdmin:%d\n"
+		 "projectGroupMembers:%[^\n]\n"
+		 "projectTaskList:%[^\n]\n"
+		 "projectDocumentList:%[^\n]\n"
+		 "$\n",
+		 &project.id,
+		 project.label,
+		 project.description,
+		 projectStartDate,
+		 projectFinishDate,
+		 &project.projectLength,
+		 project.state,
+		 projectDiscussion,
+		 &adminID,
+		 projectGroupMembers,
+		 projectTaskList,
+		 projectDocumentList) == 12)&&(test==0)) 
+		 {
+			 if(strcmp(project.label,gtk_entry_get_text (GTK_ENTRY (nameput)))==0)
+			 {
+				 test=1;
+			 }
+		 }
+		 
+		 if(test==1)
+		 {
+			 strcpy(errname,"create another name plz");
+			 erreur++;
+		 }
+		 else
+		 {
+			 strcpy(errname," ");
+		 }
+	
+	
+	
+	if(verifdate(gtk_entry_get_text (GTK_ENTRY (dueput1)))==0)
+	{
+		strcpy(errdue,"you must respect the form JJ/MM/AAAA ");
+		erreur++;
+		
+	}
+	else
+	{
+		strcpy(errdue," ");
+	}
+	if(verifdate(gtk_entry_get_text (GTK_ENTRY (endput1)))==0)
+	{
+		strcpy(errend,"you must respect the form JJ/MM/AAAA ");
+		erreur++;
+	}
+	else
+	{
+		strcpy(errend," ");
+	}
+	if(erreur>0)
+	{
+		showAddProjectWindow(NULL,NULL);
+		gtk_widget_destroy (gtk_widget_get_toplevel (widget));
+	}
+	else
+	{
+		fprintf(projectsf,"chaine de caracter:%s","firaz");
+		/*dernier=project.id;
+		fprintf(projectsf,"projectID:%d\nprojectName:%s\nprojectDescription:%s\nprojectStartDate:%s\n"
+		"projectFinishDate:%s\nprojectLength:%d\nprojectState:%s\nprojectDiscussion:%s\nprojectAdmin:%d\n"
+		"projectGroupMembers:",dernier+1,gtk_entry_get_text (GTK_ENTRY (nameput)),gtk_entry_get_text (GTK_ENTRY (descriptionput)),gtk_entry_get_text (GTK_ENTRY (dueput1)),gtk_entry_get_text (GTK_ENTRY (endput1)),0,"IN PROGRESS","",1);
+		for(i=0;i<n;i++)
+		{
+			fprintf(projectsf,"%d,",tab[i]);
+		}
+		fprintf(projectsf,"\nprojectTaskList:%s\nprojectDocumentList:%s\n$","","");*/
+		showUserDashboardWindow(NULL, NULL);
+		gtk_widget_destroy (gtk_widget_get_toplevel (widget));
+	}
+	
+	}
+	else
+	{
+		printf("Error while opening the file.\n");
+	}
 	
 	
 	
@@ -104,12 +275,6 @@ static void createProject (GtkWidget *widget, gpointer data)
   gtk_widget_set_name(addprojectLbl, "addprojectLbl");
   
   
-  /*vbox = gtk_box_new(TRUE, 10);
-  gtk_orientable_set_orientation(GTK_ORIENTABLE(vbox), GTK_ORIENTATION_VERTICAL);
-  gtk_widget_set_size_request (vbox, 300, 280);
-  gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
-  gtk_widget_set_name(vbox, "vbox");*/
-  
   hbox = gtk_box_new(FALSE, 5);
   gtk_orientable_set_orientation(GTK_ORIENTABLE(hbox), GTK_ORIENTATION_HORIZONTAL);
   gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
@@ -119,13 +284,13 @@ static void createProject (GtkWidget *widget, gpointer data)
   errorLbl=gtk_label_new(err);
   gtk_widget_set_name(errorLbl, "errorLbl");
   
-  errornameLbl=gtk_label_new("erreur");
+  errornameLbl=gtk_label_new(errname);
   gtk_widget_set_name(errornameLbl, "errornameLbl");
   
-  errordueLbl=gtk_label_new("erreur");
+  errordueLbl=gtk_label_new(errdue);
   gtk_widget_set_name(errordueLbl, "errordueLbl");
   
-  errorendLbl=gtk_label_new("erreur");
+  errorendLbl=gtk_label_new(errend);
   gtk_widget_set_name(errorendLbl, "errorendLbl");
   
   namelbl = gtk_label_new("Project Name");
@@ -137,44 +302,27 @@ static void createProject (GtkWidget *widget, gpointer data)
   duelbl = gtk_label_new("Due Date");
   gtk_widget_set_name(duelbl, "duelbl");
   
-  /*duelbl1 = gtk_label_new("/");
-  gtk_widget_set_name(duelbl1, "duelbl1");
-  
-  duelbl2 = gtk_label_new("/");
-  gtk_widget_set_name(duelbl2, "duelbl2");*/
   
   nameput = gtk_entry_new();
   gtk_entry_set_placeholder_text(GTK_ENTRY(nameput) , "Project Name");
+  gtk_entry_set_text(GTK_ENTRY(nameput),esm);
   gtk_widget_set_size_request (nameput, 1, 5);
   gtk_widget_queue_resize (nameput);
   gtk_widget_set_name(nameput, "nameput");
   
   descriptionput = gtk_entry_new();
   gtk_entry_set_placeholder_text(GTK_ENTRY(descriptionput) , "Project Description");
+  gtk_entry_set_text(GTK_ENTRY(descriptionput),descrip);
   gtk_widget_set_size_request (descriptionput, 5, 5);
   gtk_widget_set_name(descriptionput, "descriptionput");
   
   
   dueput1 = gtk_entry_new();
   gtk_entry_set_placeholder_text(GTK_ENTRY(dueput1) , "JJ/MM/AAA");
-  gtk_entry_set_max_length (dueput1,10);
+  gtk_entry_set_text(GTK_ENTRY(dueput1),due);
+  gtk_entry_set_max_length (GTK_ENTRY(dueput1),10);
   gtk_widget_set_name(dueput1, "dueput1");
   
-  /*dueput2 = gtk_entry_new();
-  gtk_entry_set_placeholder_text(GTK_ENTRY(dueput2) , "MM");
-  gtk_entry_set_max_length (dueput2,2);
-  gtk_widget_set_name(dueput2, "dueput2");
-  
-  dueput3 = gtk_entry_new();
-  gtk_entry_set_placeholder_text(GTK_ENTRY(dueput3) , "AAAA");
-  gtk_entry_set_max_length (dueput3,4);
-  gtk_widget_set_name(dueput3, "dueput3");
-  
-  gtk_box_pack_start(GTK_BOX(hbox), dueput1, FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), duelbl1, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), dueput2, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), duelbl2, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), dueput3, FALSE, FALSE, 0);*/
   
   endlbl= gtk_label_new("End Date");
   gtk_widget_set_name(endlbl, "endlbl");
@@ -186,34 +334,11 @@ static void createProject (GtkWidget *widget, gpointer data)
   
   endput1 = gtk_entry_new();
   gtk_entry_set_placeholder_text(GTK_ENTRY(endput1) , "JJ/MM/AAAA");
+  gtk_entry_set_text(GTK_ENTRY(endput1),end);
   gtk_widget_set_size_request (endput1, 1, 5);
-  gtk_entry_set_max_length (endput1,10);
+  gtk_entry_set_max_length (GTK_ENTRY(endput1),10);
   gtk_widget_set_name(endput1, "dueput1");
   
-  /*endput2 = gtk_entry_new();
-  gtk_entry_set_placeholder_text(GTK_ENTRY(endput2) , "MM");
-  gtk_widget_set_size_request (endput2, 1, 5);
-  gtk_entry_set_max_length (endput2,2);
-  gtk_widget_set_name(endput2, "dueput2");
-  
-  endput3 = gtk_entry_new();
-  gtk_entry_set_placeholder_text(GTK_ENTRY(endput3) , "AAAA");
-  gtk_widget_set_size_request (endput3, 1, 5);
-  gtk_entry_set_max_length (endput3,4);
-  gtk_widget_set_name(endput3, "dueput3");
-  
-  endlbl1=gtk_label_new("/");
-  gtk_widget_set_name(endlbl2, "endlbl2");
-  
-  endlbl2=gtk_label_new("/");
-  gtk_widget_set_name(endlbl2, "endlbl2");
-  
-  
-  gtk_box_pack_start(GTK_BOX(hboxf), endput1, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hboxf), endlbl1, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hboxf), endput2, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hboxf), endlbl2, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hboxf), endput3, FALSE, FALSE, 0);*/
   
   
   
@@ -242,12 +367,6 @@ static void createProject (GtkWidget *widget, gpointer data)
   gtk_widget_set_name(createproj, "createproj");
   g_signal_connect (createproj, "clicked", G_CALLBACK (createProject), NULL);
   
-  /*gtk_box_pack_start(GTK_BOX(vbox), namelbl, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), nameput, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), descriptionlbl, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), descriptionput, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), duelbl, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);*/
   
   fixed = gtk_fixed_new ();
   gtk_widget_set_size_request (fixed, 800, 520);
